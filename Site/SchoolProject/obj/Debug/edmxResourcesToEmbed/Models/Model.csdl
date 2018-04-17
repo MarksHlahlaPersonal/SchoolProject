@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CMS_SchoolEdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CMS_Content">
+    <Key>
+      <PropertyRef Name="ContentId" />
+    </Key>
+    <Property Name="ContentId" Type="Guid" Nullable="false" />
+    <Property Name="ContentHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeprecated" Type="Boolean" Nullable="false" />
+    <Property Name="MenuId" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="CMS_Site" Relationship="Self.FK_CMS_Content_CMS_Site" FromRole="CMS_Content" ToRole="CMS_Site" />
+    <NavigationProperty Name="CMS_Placeholder" Relationship="Self.CMS_Content_Placeholder" FromRole="CMS_Content" ToRole="CMS_Placeholder" />
+  </EntityType>
+  <EntityType Name="CMS_Menu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="UserCreated" Type="Int32" />
+    <NavigationProperty Name="CMS_Site" Relationship="Self.CMS_SiteMenu" FromRole="CMS_Menu" ToRole="CMS_Site" />
+    <Property Name="MenuOrder" Type="Int32" />
+  </EntityType>
+  <EntityType Name="CMS_Placeholder">
+    <Key>
+      <PropertyRef Name="PlaceholderId" />
+    </Key>
+    <Property Name="PlaceholderId" Type="Guid" Nullable="false" />
+    <Property Name="PlaceholderText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextOrder" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="IsVisible" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CMS_Content" Relationship="Self.CMS_Content_Placeholder" FromRole="CMS_Placeholder" ToRole="CMS_Content" />
+  </EntityType>
+  <EntityType Name="CMS_Settings">
+    <Key>
+      <PropertyRef Name="CMS_SettingId" />
+    </Key>
+    <Property Name="CMS_SettingId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeprecated" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CMS_Site" Relationship="Self.FK_CMS_Site_CMS_Settings" FromRole="CMS_Settings" ToRole="CMS_Site" />
+  </EntityType>
+  <EntityType Name="CMS_Site">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CMS_SettingId" Type="Guid" />
+    <Property Name="UserCreated" Type="Int32" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CMS_Content" Relationship="Self.FK_CMS_Content_CMS_Site" FromRole="CMS_Site" ToRole="CMS_Content" />
+    <NavigationProperty Name="CMS_Settings" Relationship="Self.FK_CMS_Site_CMS_Settings" FromRole="CMS_Site" ToRole="CMS_Settings" />
+    <NavigationProperty Name="CMS_Menu" Relationship="Self.CMS_SiteMenu" FromRole="CMS_Site" ToRole="CMS_Menu" />
+  </EntityType>
+  <Association Name="FK_CMS_Content_CMS_Site">
+    <End Role="CMS_Site" Type="Self.CMS_Site" Multiplicity="1" />
+    <End Role="CMS_Content" Type="Self.CMS_Content" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CMS_Site">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CMS_Content">
+        <PropertyRef Name="MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CMS_Site_CMS_Settings">
+    <End Role="CMS_Settings" Type="Self.CMS_Settings" Multiplicity="0..1" />
+    <End Role="CMS_Site" Type="Self.CMS_Site" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CMS_Settings">
+        <PropertyRef Name="CMS_SettingId" />
+      </Principal>
+      <Dependent Role="CMS_Site">
+        <PropertyRef Name="CMS_SettingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CMS_SiteMenu">
+    <End Role="CMS_Menu" Type="Self.CMS_Menu" Multiplicity="0..1" />
+    <End Role="CMS_Site" Type="Self.CMS_Site" Multiplicity="*" />
+  </Association>
+  <Association Name="CMS_Content_Placeholder">
+    <End Role="CMS_Content" Type="Self.CMS_Content" Multiplicity="*" />
+    <End Role="CMS_Placeholder" Type="Self.CMS_Placeholder" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="CMS_SchoolEdEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CMS_Content" EntityType="Self.CMS_Content" />
+    <EntitySet Name="CMS_Menu" EntityType="Self.CMS_Menu" />
+    <EntitySet Name="CMS_Placeholder" EntityType="Self.CMS_Placeholder" />
+    <EntitySet Name="CMS_Settings" EntityType="Self.CMS_Settings" />
+    <EntitySet Name="CMS_Site" EntityType="Self.CMS_Site" />
+    <AssociationSet Name="FK_CMS_Content_CMS_Site" Association="Self.FK_CMS_Content_CMS_Site">
+      <End Role="CMS_Site" EntitySet="CMS_Site" />
+      <End Role="CMS_Content" EntitySet="CMS_Content" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CMS_Site_CMS_Settings" Association="Self.FK_CMS_Site_CMS_Settings">
+      <End Role="CMS_Settings" EntitySet="CMS_Settings" />
+      <End Role="CMS_Site" EntitySet="CMS_Site" />
+    </AssociationSet>
+    <AssociationSet Name="CMS_SiteMenu" Association="Self.CMS_SiteMenu">
+      <End Role="CMS_Menu" EntitySet="CMS_Menu" />
+      <End Role="CMS_Site" EntitySet="CMS_Site" />
+    </AssociationSet>
+    <AssociationSet Name="CMS_Content_Placeholder" Association="Self.CMS_Content_Placeholder">
+      <End Role="CMS_Content" EntitySet="CMS_Content" />
+      <End Role="CMS_Placeholder" EntitySet="CMS_Placeholder" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

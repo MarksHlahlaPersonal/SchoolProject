@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6a50c8bde5894690bf3ba574ea713537" Name="Diagram1">
+        <EntityTypeShape EntityType="CMS_SchoolEdModel.CMS_Content" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMS_SchoolEdModel.CMS_Menu" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMS_SchoolEdModel.CMS_Placeholder" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMS_SchoolEdModel.CMS_Settings" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMS_SchoolEdModel.CMS_Site" Width="1.5" PointX="3.125" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="CMS_SchoolEdModel.FK_CMS_Content_CMS_Site" ManuallyRouted="false" />
+        <AssociationConnector Association="CMS_SchoolEdModel.FK_CMS_Site_CMS_Settings" ManuallyRouted="false" />
+        <AssociationConnector Association="CMS_SchoolEdModel.CMS_SiteMenu" ManuallyRouted="false" />
+        <AssociationConnector Association="CMS_SchoolEdModel.CMS_Content_Placeholder" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

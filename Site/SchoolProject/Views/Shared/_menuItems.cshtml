@@ -1,0 +1,19 @@
+﻿@model IEnumerable<SchoolProject.Models.CMS_Menu> 
+@{
+    string activeMenuItem = ViewBag.ActiveItem;
+
+}
+<div id="topnav">
+    <ul>
+        @foreach (SchoolProject.Models.CMS_Menu mi in (IEnumerable<SchoolProject.Models.CMS_Menu>)Model)
+        {
+            <li class="@(mi.Name.Equals(activeMenuItem,StringComparison.InvariantCultureIgnoreCase)? "active":string.Empty)" title="@mi.Description"><a href="@mi.URL">@mi.Name</a></li>
+        }
+        <li>@Html.ActionLink("Menu Admin", "Index", "CMS_Menu")</li>
+
+        @*<li><a href="pages/style-demo.html">Style Demo</a></li>
+            <li><a href="pages/full-width.html">Full Width</a></li>
+            <li><a href="#">Link Text</a></li>
+            <li class="last"><a href="#">A Long Link Text</a></li>*@
+    </ul>
+</div>

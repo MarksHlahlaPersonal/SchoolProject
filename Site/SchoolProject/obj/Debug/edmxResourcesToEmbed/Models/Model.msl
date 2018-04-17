@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CMS_SchoolEdModelStoreContainer" CdmEntityContainer="CMS_SchoolEdEntities1">
+    <EntitySetMapping Name="CMS_Content">
+      <EntityTypeMapping TypeName="CMS_SchoolEdModel.CMS_Content">
+        <MappingFragment StoreEntitySet="CMS_Content">
+          <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+          <ScalarProperty Name="ContentHeader" ColumnName="ContentHeader" />
+          <ScalarProperty Name="IsDeprecated" ColumnName="IsDeprecated" />
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CMS_Menu">
+      <EntityTypeMapping TypeName="CMS_SchoolEdModel.CMS_Menu">
+        <MappingFragment StoreEntitySet="CMS_Menu">
+          <ScalarProperty Name="MenuOrder" ColumnName="MenuOrder" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CMS_Placeholder">
+      <EntityTypeMapping TypeName="CMS_SchoolEdModel.CMS_Placeholder">
+        <MappingFragment StoreEntitySet="CMS_Placeholder">
+          <ScalarProperty Name="PlaceholderId" ColumnName="PlaceholderId" />
+          <ScalarProperty Name="PlaceholderText" ColumnName="PlaceholderText" />
+          <ScalarProperty Name="ContextOrder" ColumnName="ContextOrder" />
+          <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CMS_Settings">
+      <EntityTypeMapping TypeName="CMS_SchoolEdModel.CMS_Settings">
+        <MappingFragment StoreEntitySet="CMS_Settings">
+          <ScalarProperty Name="CMS_SettingId" ColumnName="CMS_SettingId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDeprecated" ColumnName="IsDeprecated" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CMS_Site">
+      <EntityTypeMapping TypeName="CMS_SchoolEdModel.CMS_Site">
+        <MappingFragment StoreEntitySet="CMS_Site">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CMS_SettingId" ColumnName="CMS_SettingId" />
+          <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CMS_SiteMenu" TypeName="CMS_SchoolEdModel.CMS_SiteMenu" StoreEntitySet="CMS_SiteMenu">
+      <EndProperty Name="CMS_Menu">
+        <ScalarProperty Name="Id" ColumnName="MenuId" />
+      </EndProperty>
+      <EndProperty Name="CMS_Site">
+        <ScalarProperty Name="Id" ColumnName="SiteId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CMS_Content_Placeholder" TypeName="CMS_SchoolEdModel.CMS_Content_Placeholder" StoreEntitySet="CMS_Content_Placeholder">
+      <EndProperty Name="CMS_Content">
+        <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+      </EndProperty>
+      <EndProperty Name="CMS_Placeholder">
+        <ScalarProperty Name="PlaceholderId" ColumnName="PlaceholderId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SchoolProject.CMS_SchoolEdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CMS_Menu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="UserCreated" Type="Int32" />
+    <NavigationProperty Name="CMS_Site" Relationship="Self.CMS_SiteMenu" FromRole="CMS_Menu" ToRole="CMS_Site" />
+  </EntityType>
+  <EntityType Name="CMS_Site">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserCreated" Type="Int32" />
+    <NavigationProperty Name="CMS_Menu" Relationship="Self.CMS_SiteMenu" FromRole="CMS_Site" ToRole="CMS_Menu" />
+  </EntityType>
+  <Association Name="CMS_SiteMenu">
+    <End Role="CMS_Menu" Type="Self.CMS_Menu" Multiplicity="*" />
+    <End Role="CMS_Site" Type="Self.CMS_Site" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="CMS_SchoolProjectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CMS_Menu" EntityType="Self.CMS_Menu" />
+    <EntitySet Name="CMS_Site" EntityType="Self.CMS_Site" />
+    <AssociationSet Name="CMS_SiteMenu" Association="Self.CMS_SiteMenu">
+      <End Role="CMS_Menu" EntitySet="CMS_Menu" />
+      <End Role="CMS_Site" EntitySet="CMS_Site" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

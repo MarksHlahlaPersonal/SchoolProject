@@ -1,0 +1,74 @@
+﻿
+@{
+
+    IEnumerable<SchoolProject.Models.CMS_Menu> menuItem = (IEnumerable <SchoolProject.Models.CMS_Menu>)ViewBag.Menu;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Education</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="~/Content/layout.css" type="text/css" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.slidepanel.setup.js"></script>
+    <!-- Homepage Only Scripts -->
+    <script type="text/javascript" src="Scripts/jquery.cycle.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#featured_slide').after('<div id="fsn"><ul id="fs_pagination">').cycle({
+                timeout: 5000,
+                fx: 'fade',
+                pager: '#fs_pagination',
+                pause: 1,
+                pauseOnPagerHover: 0
+            });
+        });
+    </script>
+    <!-- End Homepage Only Scripts -->
+</head>
+<body>
+    <div class="wrapper col0">
+        <div id="topbar">
+            <div id="slidepanel">
+
+                @Html.Partial("loginPartial")
+            </div>
+            <div id="loginpanel">
+                @*<ul>
+                    <li class="left">Log In Here &raquo;</li>
+                    <li class="right" id="toggle"><a id="slideit" href="#slidepanel">Administration</a><a id="closeit" style="display: none;" href="#slidepanel">Close Panel</a></li>
+                </ul>*@
+            </div>
+            <br class="clear" />
+        </div>
+    </div>
+
+    <div class="wrapper col1">
+        <div id="header">
+            <div id="logo">
+                <h1><a href="/">School Name</a></h1>
+                <p>Shcool Slogan</p>
+            </div>
+            @Html.Partial("_menuItems", menuItem)
+            <br class="clear" />
+        </div>
+    </div>
+
+    <div>
+        @RenderBody();
+    </div>
+
+    <div class="wrapper col5">
+        <div id="copyright">
+            <p class="fl_left">Copyright &copy; @DateTime.Now.Year - All Rights Reserved - <a href="#">Domain Name</a></p>
+            <p class="fl_right">Site by<a target="_blank" href="#" title=""> BluPrintz Consultings</a></p>
+            <br class="clear" />
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

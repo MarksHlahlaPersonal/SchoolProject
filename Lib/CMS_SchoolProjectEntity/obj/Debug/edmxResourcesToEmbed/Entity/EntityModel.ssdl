@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CMS_SchoolEdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CMS_Menu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="URL" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="DateCreated" Type="date" Nullable="false" />
+    <Property Name="UserCreated" Type="int" />
+  </EntityType>
+  <EntityType Name="CMS_Site">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+    <Property Name="UserCreated" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CMS_SchoolEd.dbo.CMS_SiteMenu' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CMS_SiteMenu">
+    <Key>
+      <PropertyRef Name="SiteId" />
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="SiteId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="MenuId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CMS_SiteMenu_CMS_Menu">
+    <End Role="CMS_Menu" Type="Self.CMS_Menu" Multiplicity="1" />
+    <End Role="CMS_SiteMenu" Type="Self.CMS_SiteMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CMS_Menu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CMS_SiteMenu">
+        <PropertyRef Name="MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CMS_SiteMenu_CMS_Site">
+    <End Role="CMS_Site" Type="Self.CMS_Site" Multiplicity="1" />
+    <End Role="CMS_SiteMenu" Type="Self.CMS_SiteMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CMS_Site">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CMS_SiteMenu">
+        <PropertyRef Name="SiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CMS_SchoolEdModelStoreContainer">
+    <EntitySet Name="CMS_Menu" EntityType="Self.CMS_Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CMS_Site" EntityType="Self.CMS_Site" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CMS_SiteMenu" EntityType="Self.CMS_SiteMenu" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CMS_SiteMenu].[SiteId] AS [SiteId], 
+    [CMS_SiteMenu].[MenuId] AS [MenuId]
+    FROM [dbo].[CMS_SiteMenu] AS [CMS_SiteMenu]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_CMS_SiteMenu_CMS_Menu" Association="Self.FK_CMS_SiteMenu_CMS_Menu">
+      <End Role="CMS_Menu" EntitySet="CMS_Menu" />
+      <End Role="CMS_SiteMenu" EntitySet="CMS_SiteMenu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CMS_SiteMenu_CMS_Site" Association="Self.FK_CMS_SiteMenu_CMS_Site">
+      <End Role="CMS_Site" EntitySet="CMS_Site" />
+      <End Role="CMS_SiteMenu" EntitySet="CMS_SiteMenu" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
